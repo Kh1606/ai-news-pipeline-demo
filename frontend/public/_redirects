@@ -1,0 +1,11 @@
+# Cloudflare Pages rewrites — production-only.
+# In dev, Vite's proxy in vite.config.js forwards /api/* to the local FastAPI.
+# In prod, the /api endpoints are pre-generated static JSON files.
+# Status 200 = rewrite (URL stays the same), so the existing frontend code
+# can keep calling /api/articles?... unchanged.
+
+/api/articles*    /api/articles.json    200
+/api/trends/kr*   /api/trends/kr.json   200
+
+# SPA fallback — any unknown path returns the index so client-side routing works.
+/*    /index.html    200

@@ -75,6 +75,30 @@ ai-news-pipeline-demo/
 └── README.md
 ```
 
+## Deployment
+
+The site deploys as a fully static build to Cloudflare Pages. There is no
+running backend in production — the `/api/*` responses are pre-generated
+into JSON files at build time and served as static assets, with a
+`_redirects` file rewriting the URL paths so the frontend code is unchanged.
+
+**Cloudflare Pages build config:**
+- Build command: `cd frontend && npm install && npm run build`
+- Build output directory: `frontend/dist`
+- Root directory: leave default
+
+To refresh the data (after editing the CSVs):
+
+```bash
+cd backend
+.venv\Scripts\activate          # or `source .venv/bin/activate`
+python ../scripts/generate_static_api.py
+```
+
+This regenerates `frontend/public/api/articles.json` and
+`frontend/public/api/trends/kr.json`. Commit and push — Cloudflare Pages
+auto-deploys.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
