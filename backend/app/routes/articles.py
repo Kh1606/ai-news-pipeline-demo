@@ -9,7 +9,7 @@ from app.repository import list_articles
 router = APIRouter()
 
 
-@router.get("/articles")
+@router.get("/articles.json")
 def get_articles(
     min_ai_score: float = Query(0.5),
     limit: int = Query(200, ge=1, le=2000),

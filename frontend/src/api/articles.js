@@ -113,7 +113,7 @@ export async function fetchArticles(
   { signal, timeoutMs = DEFAULT_TIMEOUT_MS, retries = DEFAULT_RETRIES } = {}
 ) {
   const url =
-    `/api/articles?min_ai_score=${encodeURIComponent(minAiScore)}` +
+    `/api/articles.json?min_ai_score=${encodeURIComponent(minAiScore)}` +
     `&limit=${encodeURIComponent(limit)}` +
     `&score_version=${encodeURIComponent(scoreVersion)}`;
 

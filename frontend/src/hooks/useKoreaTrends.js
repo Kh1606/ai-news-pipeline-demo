@@ -41,7 +41,7 @@ export default function useKoreaTrends(opts = {}) {
         if (opts.min_topic != null) p.set("min_topic", String(opts.min_topic));
         if (opts.score_version) p.set("score_version", String(opts.score_version));
 
-        const endpoint = "/api/trends/kr";
+        const endpoint = "/api/trends/kr.json";
         const url = `${endpoint}?${p.toString()}`;
         let res;
         try {

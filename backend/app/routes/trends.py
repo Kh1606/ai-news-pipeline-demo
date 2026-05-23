@@ -9,7 +9,7 @@ from app.repository import KR_SOURCE_IDS, weekly_topic_trends
 router = APIRouter()
 
 
-@router.get("/trends/kr")
+@router.get("/trends/kr.json")
 def trends_kr(
     start: str = Query("2025-01-01"),
     end: Optional[str] = Query(None),
