@@ -2,21 +2,26 @@
 
 A small full-stack demo: collect, tag, and visualize global AI-related news.
 
+**🌐 Live demo:** **<https://ai-news-pipeline-demo.azimjon1606.workers.dev>**
+
 This is a **personal, runnable demo** — a stripped-down version of a production
-system I built. The data here is a small CSV sample (~400 articles, ~188
+system I built. The data here is a small CSV sample (~1500 articles, ~188
 sources); the database, scraping pipeline, and ML tagging service are
 documented in [`docs/architecture.md`](docs/architecture.md) but not
 implemented in this repo.
 
-## What you get when you run it
+## What you get
 
-- **FastAPI backend** that serves `/api/articles` and `/api/trends/kr` from CSVs
 - **React 19 + Vite 7 dashboard** with:
   - Leaflet world map of news sources sized by article volume
   - Recharts weekly topic-trend chart for Korean sources
   - Filterable news panel with topic + language tags
+- **FastAPI backend** (for local dev) that serves `/api/articles.json` and
+  `/api/trends/kr.json` from CSVs. In production the same JSON files are
+  pre-rendered at build time and served as static assets by Cloudflare —
+  no running backend needed.
 
-## Quick start (no Docker)
+## Run it locally
 
 **Backend** (terminal 1):
 
@@ -77,15 +82,16 @@ ai-news-pipeline-demo/
 
 ## Deployment
 
-The site deploys as a fully static build to Cloudflare Pages. There is no
-running backend in production — the `/api/*` responses are pre-generated
-into JSON files at build time and served as static assets, with a
-`_redirects` file rewriting the URL paths so the frontend code is unchanged.
+The site deploys as a fully static build to **Cloudflare Workers (Static Assets)**.
+There is no running backend in production — the `/api/*.json` responses are
+pre-rendered at build time and served as static files.
 
-**Cloudflare Pages build config:**
-- Build command: `cd frontend && npm install && npm run build`
-- Build output directory: `frontend/dist`
-- Root directory: leave default
+- Config: [`wrangler.jsonc`](wrangler.jsonc) tells the Worker to serve from
+  `./frontend/dist` with SPA fallback for unknown paths.
+- Build command (set in Cloudflare dashboard):
+  `cd frontend && npm install && npm run build`
+- Deploy command: `npx wrangler deploy`
+- Cloudflare auto-deploys on every push to `main`.
 
 To refresh the data (after editing the CSVs):
 
@@ -96,8 +102,8 @@ python ../scripts/generate_static_api.py
 ```
 
 This regenerates `frontend/public/api/articles.json` and
-`frontend/public/api/trends/kr.json`. Commit and push — Cloudflare Pages
-auto-deploys.
+`frontend/public/api/trends/kr.json`. Commit and push — the next deploy picks
+them up.
 
 ## License
 
