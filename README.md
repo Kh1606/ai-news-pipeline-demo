@@ -5,7 +5,7 @@ A small full-stack demo: collect, tag, and visualize global AI-related news.
 **🌐 Live demo:** **<https://ai-news-pipeline-demo.azimjon1606.workers.dev>**
 
 This is a **personal, runnable demo** — a stripped-down version of a production
-system I built. The data here is a small CSV sample (~1500 articles, ~188
+system I built and run in production at https://aicerti.co.kr. The data here is a small CSV sample (~1500 articles, ~188
 sources); the database, scraping pipeline, and ML tagging service are
 documented in [`docs/architecture.md`](docs/architecture.md) but not
 implemented in this repo.
